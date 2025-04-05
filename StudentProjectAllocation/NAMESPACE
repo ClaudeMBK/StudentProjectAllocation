@@ -1,0 +1,20 @@
+useDynLib(StudentProjectAllocation, .registration=TRUE)
+
+export(hungarian_algorithm)
+export(genetic_algorithm_assignment)
+
+
+export(hungarian_algorithm_cpp)
+export(genetic_algorithm_cpp)
+
+##### Exports sorting algo
+export(insertion_sort)
+export(heap_sort)
+
+export(insertion_sort_Rcpp)
+export(heap_sort_Rcpp)
+
+importFrom(Rcpp, evalCpp)
+
+
+

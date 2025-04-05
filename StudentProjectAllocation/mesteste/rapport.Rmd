@@ -1,0 +1,246 @@
+---
+title: | 
+  | Analyse de deux algorithmes de tri par comparaison
+  | ![](Images/logo_lamme.png){width=1in}  ![](Images/logo_UEVE.png){width=1.7in}
+  |  M2 Data Science Algorithmique 
+author:  "ATHOUMANI Ibroihima, AH-MOUK Laietitia, MBIBIK  Claude"
+date: "jeudi 27 mars 2025"
+header-includes:
+  - \usepackage[french]{babel}
+output:
+  pdf_document:
+    keep_tex: yes
+    toc: true
+    number_sections: true  
+urlcolor: blue
+---
+
+\noindent\hrulefill
+
+
+# Description du problème et objectif
+
+Nous étudions dans ce document le problème très classique du tri des éléments d'un vecteur. Ce problème consiste à trier par ordre croissant les éléments d'un vecteur initialement non-trié. 
+
+Il est intéressant de remarquer que de nombreuses méthodes algorithmiques répondent à ce problème. Elles se distinguent par leur temps d'exécution et par la mémoire nécessaire à résoudre la tâche. La question centrale est ici celle du temps d'exécution.
+
+[La page wikipédia du tri](https://fr.wikipedia.org/wiki/Algorithme_de_tri) rassemble de nombreux algorithmes de tri avec leurs avantages et inconvénients respectifs. La complexité du problème de tri (par comparaison) est de $O(n \log n)$ pour un vecteur de longueur $n$. Cela signifie que, théoriquement, aucun algorithme ne pourra jamais être plus rapide que cette borne asymptotique. Le *radix sort* et quelques autres algorithmes sont en temps $O(n)$ mais demandent des hypothèses supplémentaires sur les données (ce n'est plus un tri par comparaison).
+
+Dans ce document, nous concentrons notre attention sur deux algorithmes de tri:
+
+1) le tri par insertion, de complexité **$O(n^2)$**
+
+2) le tri par tas (*heap sort*), de complexité **$O(n \log(n))$**. Des détails sur le [tri par tas](https://en.wikipedia.org/wiki/Heapsort) sont donnés dans le lien, en particulier les animations donnent une bonne idée du fonctionnement d'un tas.
+
+
+Nous avons donc ici deux méthodes l'une naïve, l'autre plus évoluée. Nos objectifs sont alors:
+
+a) d'implémenter ces algorithmes en R et en C++ et évaluer le gain de temps;
+
+b) de confirmer les complexités théoriques trouvées sur le papier (ce n'est pas fait dans ce document mais a été fait dans le cours) par des simulations intensives.
+
+___ 
+
+À noter que le (b) se termine toujours par l'évaluation d'une pente sur une régression linéaire en échelle log-log. Cela donne une évaluation de la valeur $x$ dans la complexité de type $O(n^x)$ ou $O(n^x \log^y(n))$.
+
+Nous allons ajouter une étape en plus. En effet, l'évaluation de la complexité se fait sur des données simulées, issues d'une certaine distribution de probabilité. Nous souhaitons étudier le temps d'exécution dans un cas plus favorable à l'algorithme d'insertion.
+
+___ 
+
+# Un premier exemple
+
+Le package se télécharge ainsi :
+
+```{r, eval=FALSE}
+devtools::install_github("vrunge/M2algorithmique")
+```
+
+et ses fonctions sont rendues disponibles sur Rstudio ainsi :
+
+```{r}
+library(StudentProjectAllocation)
+```
+
+On simule un petit exemple d'un vecteur `v` de taille `100`
+
+```{r}
+n <- 100 #data size 
+generate_matrix <- function(n) {
+  matrix(apply(matrix(1:n, n, n, byrow = TRUE), 1, sample), 
+         nrow = n, byrow = TRUE)} #generate random cost matrix
+cost_matrix<-generate_matrix(n)
+```
+
+On teste les 4 algorithmes implémentés avec des noms explicites : 
+
+- ` hungarian_algorithm` 
+- `genetic_algorithm_assignment` 
+- `hungarian_algorithm_cpp` 
+- `genetic_algorithm_cpp` 
+
+Cela donne :
+
+```{r}
+hungarian_algorithm(cost_matrix)
+genetic_algorithm_assignment(cost_matrix)
+hungarian_algorithm_cpp(cost_matrix)
+genetic_algorithm_cpp(cost_matrix)
+```
+
+
+___ 
+
+# Comparaison R avec C++
+
+On va faire des comparaisons pour les deux types d'algorithme en R et C++ pour quantifier leur différence de performance.
+
+La fonction `one.simu.time` retourne le temps recherché, et `one.simu` sera utilisé par `microbenchmark`
+
+```{r}
+one.simu <- function(n, type = "random", func = "hungarian_algorithm")
+{
+  if(type == "random"){
+    v <- generate_matrix(n)
+  } else {
+    v <- generate_matrix(n) # worst case scenario
+  }
+  if(func == "hungarian_algorithm"){t <- system.time(hungarian_algorithm(v))[[1]]}
+  if(func == "genetic_algorithm_assignment"){t <- system.time(genetic_algorithm_assignment(v))[[1]]} 
+  if(func == "hungarian_algorithm_cpp"){t <- system.time(hungarian_algorithm_cpp(v))[[1]]}
+  if(func == "genetic_algorithm_cpp"){t <- system.time(genetic_algorithm_cpp(v))[[1]]}
+  return(t)
+}
+```
+
+## Un essai
+
+Sur un exemple, on obtient :
+
+```{r}
+n <- 100
+one.simu(n, func = "hungarian_algorithm")
+one.simu(n, func = "genetic_algorithm_assignment")
+one.simu(n, func = "hungarian_algorithm_cpp")
+one.simu(n, func = "genetic_algorithm_cpp")
+```
+
+
+## Simulations avec répétitions
+
+On reproduit ces comparaisons de manière plus robuste:
+
+```{r first simu}
+nbSimus <- 10
+time1 <- 0
+time2 <- 0
+time3 <- 0
+time4 <- 0
+for(i in 1:nbSimus){time1 <- time1 + one.simu(n, func = "hungarian_algorithm")}
+for(i in 1:nbSimus){time2 <- time2 + one.simu(n, func = "genetic_algorithm_assignment")}
+for(i in 1:nbSimus){time3 <- time3 + one.simu(n, func = "hungarian_algorithm_cpp")}
+for(i in 1:nbSimus){time4 <- time4 + one.simu(n, func = "genetic_algorithm_cpp")}
+
+```
+
+gain R -> Rcpp
+
+```{r}
+time1/time3
+time2/time4
+```
+
+gain hungarian -> genetic
+
+```{r}
+
+time1/time2
+time3/time4
+```
+
+max gain
+
+```{r}
+
+time1/time4
+```
+
+On recommence avec `n = 20000` seulement pour le gain avec C++ pour le tas
+
+```{r second simu}
+
+```
+
+
+**Conclusion:**
+
+- pour une taille de `10000` la gain avec C++ atteint un facteur 500 entre le tas C++ et le tas R. Ce gain semble augmenter avec la taille. 
+
+- Sans surprise, le tri par tas est plus rapide que le tri par insertion.
+
+## Simulations avec `microbenchmark`
+
+Vous avez besoin des packages `microbenchmark` et `ggplot2` pour exécuter les simulations et afficher les résultats (sous forme de diagrammes en violon). Nous comparons `insertion_sort_Rcpp` avec `heap_sort_Rcpp` pour des tailles de données `n = 1000` et `n = 10000`.
+
+```{r}
+library(microbenchmark)
+library(ggplot2)
+```
+
+```{r benchmark, echo = FALSE, warning=FALSE, message=FALSE}
+n <- 100
+res <- microbenchmark(
+  one.simu(n, func = "hungarian_algorithm_cpp"), 
+  one.simu(n, func = "genetic_algorithm_cpp"), 
+  times = 50
+)
+autoplot(res)
+res
+```
+
+Genetic algorithm complexity
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+
+nbSimus <- 10
+vector_n <- seq(from = 50, to = 500, length.out = nbSimus)
+nbRep <- 10
+res_Genetic <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_Genetic) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_Genetic[j,] <- c(i, replicate(nbRep, one.simu(i, func = "genetic_algorithm_cpp")))  
+  print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_Genetic[,-1])
+plot(vector_n, res, xlab = "matrix size (n x n)", ylab = "time in seconds")
+
+
+```
+```{r}
+# Hungarian algorithm complexity
+nbSimus <- 40
+vector_n <- seq(from = 1000, to = 10000, length.out = nbSimus)  # smaller range due to O(n�)
+nbRep <- 10
+res_Hungarian <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_Hungarian) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_Hungarian[j,] <- c(i, replicate(nbRep, one.simu(i, func = "hungarian_algorithm_cpp")))  
+  print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_Hungarian[,-1])
+plot(log(vector_n), log(res), xlab = "matrix size (n x n)", ylab = "time in seconds")
+#lm(log(res) ~ log(vector_n))  # to estimate complexity
+```
+
+
+___ 
+
+
