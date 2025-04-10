@@ -1,0 +1,13 @@
+useDynLib(StudentProjectAllocation, .registration=TRUE)
+
+export(hungarian_assignment)
+export(hungarian_cost)
+export(genetic_algorithm)
+
+importFrom(Rcpp, evalCpp)
+
+export(genetic_algorithm_cpp)
+export(hungarian_assignment_cpp)
+export(hungarian_cost_cpp)
+
+importFrom("stats", "runif")

@@ -1,0 +1,22 @@
+Package: StudentProjectAllocation
+Type: Package
+Title: Algorithms for student project allocation
+Version: 1.0
+Date: 2025-04-11
+Authors: Laetitia Ah-Mouck, Ibroihima Athoumani, Claude Mbimbiki
+Maintainer: Laetitia Ah-Mouck <laetitia.ahmouck@gmail.com>
+Description: This package provides efficient implementations of the Hungarian 
+    algorithm and a genetic algorithm, using both R and Rcpp. These algorithms 
+    are designed to solve the student-project allocation problem, where students 
+    are matched to projects based on cost, preferences, or suitability. The 
+    package allows users to compute optimal or near-optimal assignments and 
+    evaluate assignment costs.
+Encoding: UTF-8
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.5)
+LinkingTo: Rcpp
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
