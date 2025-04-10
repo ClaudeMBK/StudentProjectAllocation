@@ -2,7 +2,6 @@
 
 **StudentProjectAllocation** est un package R développé avec Rcpp pour résoudre le problème d'allocation étudiant-projet, une version spécifique du problème d'affectation bipartite en optimisation combinatoire. Ce package vise à assigner de manière optimale $n$ étudiants à $n$ projets en minimisant une fonction de coût basée sur des préférences ou des compatibilités. Il implémente deux approches principales : l'algorithme hongrois (Hungarian Algorithm), qui fournit une solution optimale exacte, et un algorithme génétique, qui offre une solution approchée pour explorer des alternatives heuristiques.
 
-Ce projet a été inspiré par les travaux de Vincent Runge et s'inscrit dans une démarche d'évaluation comparative entre une méthode exacte ($O(n^3)$) et une méthode heuristique.
 
 ---
 
