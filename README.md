@@ -48,8 +48,8 @@ Installez **StudentProjectAllocation** depuis GitHub avec `devtools` :
 # Installer devtools si nécessaire
 if (!require(devtools)) install.packages("devtools")
 
-# Installer AssignmentSolver
-devtools::install_github("claudeMBK/Algorithmie2025/StudentProjectAllocation")
+# Installer StudentProjectAllocation
+devtools::install_github("claudeMBK/StudentProjectAllocation")
 ```
 
 Chargez le package dans R :
@@ -120,7 +120,8 @@ print(assignment_cpp)
 
 ## Contact
 
-Pour toute question, contactez-nous:  à `votre.email@example.com`.
+Pour toute question, contactez-nous:  athoumani.ibroihima@gmail.com .
+
 
 
 
