@@ -2,9 +2,6 @@
 
 **StudentProjectAllocation** est un package R développé avec Rcpp pour résoudre le problème d'allocation étudiant-projet, une version spécifique du problème d'affectation bipartite en optimisation combinatoire. Ce package vise à assigner de manière optimale $n$ étudiants à $n$ projets en minimisant une fonction de coût basée sur des préférences ou des compatibilités. Il implémente deux approches principales : l'algorithme hongrois (Hungarian Algorithm), qui fournit une solution optimale exacte, et un algorithme génétique, qui offre une solution approchée pour explorer des alternatives heuristiques.
 
-
----
-
 ## Contexte
 
 Le problème d'affectation étudiant-projet consiste à assigner un ensemble d'étudiants $S = \{s_1, s_2, \ldots, s_n\}$ à un ensemble de projets $P = \{p_1, p_2, \ldots, p_n\}$ de manière optimale. Chaque étudiant $i$ a une préférence ou une compatibilité avec un projet $j$, représentée par une matrice de coût $C = \{c_{ij}\}$, où $c_{ij}$ est la "distance" (ou le coût) entre l'étudiant $i$ et le projet $j$. L'objectif est de minimiser la fonction suivante :
@@ -15,7 +12,6 @@ $$
 
 où $\sigma(i)$ est le projet assigné à l'étudiant $i$. Ce problème est une variante du problème du mariage stable ou de l'affectation bipartite.
 
----
 
 ## Objectifs
 
@@ -23,7 +19,6 @@ où $\sigma(i)$ est le projet assigné à l'étudiant $i$. Ce problème est une 
 2. **Algorithme Génétique** : Développer une approche heuristique pour obtenir une solution approchée rapidement, et évaluer si elle peut se rapprocher de l'optimum.
 3. **Comparaison** : Analyser si l'algorithme génétique peut être une alternative fiable pour des tailles de problèmes trop grandes pour l'algorithme hongrois.
 
----
 
 ## Fonctionnalités
 
@@ -38,7 +33,6 @@ où $\sigma(i)$ est le projet assigné à l'étudiant $i$. Ce problème est une 
 
 - **Support des matrices de coût** : Les fonctions prennent en entrée une matrice carrée $C$ où $c_{ij}$ représente le coût d'assigner l'étudiant $i$ au projet $j$.
 
----
 
 ## Prérequis
 
@@ -46,24 +40,22 @@ où $\sigma(i)$ est le projet assigné à l'étudiant $i$. Ce problème est une 
 - **Rcpp** (installé automatiquement comme dépendance).
 - Un compilateur C++ (ex. `g++` sur Linux, `Xcode` sur macOS, `Rtools` sur Windows).
 
----
-
 ## Installation
 
-Installez **AssignmentSolver** depuis GitHub avec `devtools` :
+Installez **StudentProjectAllocation** depuis GitHub avec `devtools` :
 
 ```R
 # Installer devtools si nécessaire
 if (!require(devtools)) install.packages("devtools")
 
 # Installer AssignmentSolver
-devtools::install_github("votre-nom-utilisateur/AssignmentSolver")
+devtools::install_github("claudeMBK/Algorithmie2025/StudentProjectAllocation")
 ```
 
 Chargez le package dans R :
 
 ```R
-library(AssignmentSolver)
+library(StudentProjectAllocation)
 ```
 
 ---
