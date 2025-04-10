@@ -49,7 +49,7 @@ Installez **StudentProjectAllocation** depuis GitHub avec `devtools` :
 if (!require(devtools)) install.packages("devtools")
 
 # Installer StudentProjectAllocation
-devtools::install_github("claudeMBK/StudentProjectAllocation")
+devtools::install_github("ClaudeMBK/StudentProjectAllocation")
 ```
 
 Chargez le package dans R :
@@ -120,7 +120,7 @@ print(assignment_cpp)
 
 ## Contact
 
-Pour toute question, contactez-nous:  athoumani.ibroihima@gmail.com .
+Pour toute question, contactez-nous:  athoumani.ibroihima@gmail.com, laetitia.ahmouck@gmail.com .
 
 
 
