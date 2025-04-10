@@ -1,4 +1,4 @@
-# StudentProjectAllocation: Student-Project Allocation with Rcpp
+# StudentProjectAllocation: Student-Project Allocation with R and Rcpp
 
 **StudentProjectAllocation** est un package R développé avec Rcpp pour résoudre le problème d'allocation étudiant-projet, une version spécifique du problème d'affectation bipartite en optimisation combinatoire. Ce package vise à assigner de manière optimale $n$ étudiants à $n$ projets en minimisant une fonction de coût basée sur des préférences ou des compatibilités. Il implémente deux approches principales : l'algorithme hongrois (Hungarian Algorithm), qui fournit une solution optimale exacte, et un algorithme génétique, qui offre une solution approchée pour explorer des alternatives heuristiques.
 
@@ -49,7 +49,7 @@ Installez **StudentProjectAllocation** depuis GitHub avec `devtools` :
 if (!require(devtools)) install.packages("devtools")
 
 # Installer StudentProjectAllocation
-devtools::install_github("ClaudeMBK/StudentProjectAllocation")
+devtools::install_github("claudeMBK/StudentProjectAllocation")
 ```
 
 Chargez le package dans R :
