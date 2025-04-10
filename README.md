@@ -120,7 +120,7 @@ print(assignment_cpp)
 
 ## Contact
 
-Pour toute question, contactez-nous:  athoumani.ibroihima@gmail.com, laetitia.ahmouck@gmail.com .
+Pour toute question, contactez-nous:  athoumani.ibroihima@gmail.com, laetitia.ahmouck@gmail.com, claudembimbiki16@gmail.com .
 
 
 
